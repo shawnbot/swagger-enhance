@@ -1,12 +1,18 @@
 {
   "name": "swagger-enhance",
   "version": "1.0.0",
-  "description": "",
+  "description": "Enhance Swagger JSON data",
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "test": "mocha"
   },
-  "author": "",
+  "author": "Shawn Allen <shawn.allen@hush.com>",
+  "keywords": [
+    "swagger",
+    "data",
+    "api",
+    "json"
+  ],
   "license": "ISC",
   "dependencies": {
     "async": "^0.9.0",
