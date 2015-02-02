@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+var enhance = require("../"),
+    rw = require("rw"),
+    async = require("async"),
+    yargs = require("yargs")
+      .usage("Usage: $0 [--file --base <url>] [--pretty] [input] [output]")
+      .alias("h", "help")
+      .boolean("file")
+        .describe("file", "Parse the input as a filename, rather than a URL")
+      .string("base")
+        .describe("base", "set the base URL for file input")
+      .boolean("pretty")
+        .alias("p", "pretty")
+        .describe("p", "Output JSON prettily"),
+    options = yargs.argv,
+    args = options._,
+    input = args.shift() || "/dev/stdin",
+    output = args.shift() || "/dev/stdout";
+
+if (options.file && !options.base) {
+  options.help = true;
+}
+
+if (options.help) {
+  yargs.showHelp();
+  process.exit(0);
+}
+
+async.waterfall([
+  options.file ? readFile : readURL,
+  write
+], function(error) {
+  if (error) {
+    console.error("Error:", error);
+    process.exit(1);
+  }
+});
+
+function readURL(done) {
+  return enhance.url(input, done);
+}
+
+function readFile(done) {
+  rw.readFile(input, function(error, content) {
+    done(null, JSON.parse(content));
+  });
+}
+
+function write(data, done) {
+  var text = options.pretty
+    ? JSON.stringify(data, null, "  ")
+    : JSON.stringify(data);
+  rw.writeFile(output, text, done);
+}
