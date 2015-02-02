@@ -1,7 +1,7 @@
 {
   "name": "swagger-enhance",
   "version": "0.1.0",
-  "description": "Enhance Swagger JSON data",
+  "description": "Enhance Swagger API metadata with more useful info",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
