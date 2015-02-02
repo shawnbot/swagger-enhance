@@ -1,10 +1,13 @@
 {
   "name": "swagger-enhance",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Enhance Swagger JSON data",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
+  },
+  "bin": {
+    "swagger-enhance": "bin/enhance"
   },
   "author": "Shawn Allen <shawn.allen@hush.com>",
   "keywords": [
