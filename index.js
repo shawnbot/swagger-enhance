@@ -5,13 +5,18 @@ var request = require("request"),
 module.exports = enhance;
 enhance.url = enhanceURL;
 
+var ignoreKeys = [
+  "swaggerVersion",
+  "apiVersion"
+];
+
 function enhance(data, baseUrl, done) {
   async.map(data.apis, function(api, next) {
     var apiUrl = baseUrl + api.path;
     request(apiUrl, function(error, response, body) {
       if (error) return next(error);
       extend(api, JSON.parse(body));
-      ["swaggerVersion", "apiVersion"].forEach(function(k) {
+      ignoreKeys.forEach(function(k) {
         delete api[k];
       });
       next(null, api);
