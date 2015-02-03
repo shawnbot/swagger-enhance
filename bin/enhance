@@ -29,7 +29,7 @@ if (options.help) {
 async.waterfall([
   options.file ? readFile : readURL,
   write
-], function(error) {
+], function allDone(error) {
   if (error) {
     console.error("Error:", error);
     process.exit(1);

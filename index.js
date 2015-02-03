@@ -11,6 +11,7 @@ var ignoreKeys = [
 ];
 
 function enhance(data, baseUrl, done) {
+  if (!data.basePath) data.basePath = baseUrl;
   async.map(data.apis, function(api, next) {
     var apiUrl = baseUrl + api.path;
     request(apiUrl, function(error, response, body) {
@@ -35,6 +36,7 @@ function enhanceURL(url, done) {
       return done("Unable to load '" + url + "': " + error);
     }
     var data = JSON.parse(body);
+    if (!data.basePath) data.basePath = baseUrl;
     enhance(data, baseUrl, function(error) {
       if (error) return done("Unable to enhance data: " + error);
       return done(null, data);
